@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable prettier/prettier */
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -14,18 +16,30 @@ import {
   View,
   Text,
   StatusBar,
+  TextInput,
 } from 'react-native';
 
 import {
-  LearnMoreLinks,
   Colors,
-  DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
 import Header from './components/header/Header.js';
+import CountDownTimer from './components/countdowntimer/CountDownTimer.js';
+import Dashboard from './components/dashboard/Dashboard.js';
 
 const App: () => React$Node = () => {
+  let fakeState = {
+    lengthOfRun: 3,
+    lengthOfRest: 1,
+    totalNumbOfIntvls: 3,
+    remainingNumbIntvls: 3,
+    countDownTimer: 3.33,
+    currentTime: '3:45:32',
+    currentProcess: 'idle',
+    nextProcess: 'run',
+  };
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -33,7 +47,6 @@ const App: () => React$Node = () => {
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
-
           {global.HermesInternal == null ? null : (
             <View style={styles.engine}>
               <Text style={styles.footer}>Engine: Hermes</Text>
@@ -41,33 +54,40 @@ const App: () => React$Node = () => {
           )}
 
           <View style={styles.body}>
+
+            {/* Header */}
             <View style={styles.sectionContainer}>
               <Text style={styles.sectionTitle}>
                 <Header />
               </Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
             </View>
+
+            {/* Dashboard */}
             <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
+              <Text style={styles.sectionTitle}>Run Info</Text>
               <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
+                <Dashboard fakeState={fakeState} />
               </Text>
             </View>
+
+            {/* CountDownTimer */}
             <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
+              <Text style={styles.sectionTitle}>Remaning Time:</Text>
               <Text style={styles.sectionDescription}>
-                <DebugInstructions />
+                <CountDownTimer timeToDisplay={fakeState.countDownTimer} />
               </Text>
             </View>
+
             <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do to your butt butt butt
-              </Text>
+              <TextInput
+                style={{
+                  height: 80, borderColor: 'gray', borderWidth: 1,
+                  backgroundColor: 'gold',
+                }}
+                defaultValue="You can type in me"
+              />
             </View>
+
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -77,7 +97,7 @@ const App: () => React$Node = () => {
 
 const styles = StyleSheet.create({
   scrollView: {
-    backgroundColor: Colors.lighter,
+    backgroundColor: 'yellowgreen',
   },
   engine: {
     position: 'absolute',
@@ -85,6 +105,7 @@ const styles = StyleSheet.create({
   },
   body: {
     backgroundColor: 'yellowgreen',
+    minHeight: 700,
   },
   sectionContainer: {
     marginTop: 32,
@@ -105,7 +126,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   footer: {
-    color: Colors.dark,
+    color: 'yellowgreen',
     fontSize: 12,
     fontWeight: '600',
     padding: 4,
