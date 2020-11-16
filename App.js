@@ -17,12 +17,13 @@ import {
 } from 'react-native';
 
 import {
-  Header,
   LearnMoreLinks,
   Colors,
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+
+import Header from './components/header/Header.js';
 
 const App: () => React$Node = () => {
   return (
@@ -32,15 +33,18 @@ const App: () => React$Node = () => {
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
-          <Header />
+
           {global.HermesInternal == null ? null : (
             <View style={styles.engine}>
               <Text style={styles.footer}>Engine: Hermes</Text>
             </View>
           )}
+
           <View style={styles.body}>
             <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
+              <Text style={styles.sectionTitle}>
+                <Header />
+              </Text>
               <Text style={styles.sectionDescription}>
                 Edit <Text style={styles.highlight}>App.js</Text> to change this
                 screen and then come back to see your edits.
@@ -61,10 +65,9 @@ const App: () => React$Node = () => {
             <View style={styles.sectionContainer}>
               <Text style={styles.sectionTitle}>Learn More</Text>
               <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
+                Read the docs to discover what to do to your butt butt butt
               </Text>
             </View>
-            <LearnMoreLinks />
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -81,7 +84,7 @@ const styles = StyleSheet.create({
     right: 0,
   },
   body: {
-    backgroundColor: Colors.white,
+    backgroundColor: 'yellowgreen',
   },
   sectionContainer: {
     marginTop: 32,
