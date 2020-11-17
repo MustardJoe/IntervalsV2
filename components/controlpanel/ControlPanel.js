@@ -9,3 +9,5 @@ const ControlPanel = (props) => {
     </View>
   );
 };
+
+export default ControlPanel;
