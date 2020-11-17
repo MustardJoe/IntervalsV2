@@ -8,7 +8,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, { setState, Component } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -17,6 +17,7 @@ import {
   Text,
   StatusBar,
   TextInput,
+  Button,
 } from 'react-native';
 
 import {
@@ -27,34 +28,11 @@ import Header from './components/header/Header.js';
 import CountDownDisplay from './components/countdowntimer/CountDownDisplay.js';
 import Dashboard from './components/dashboard/Dashboard.js';
 
-const resetTimer = () => {
-  this.setState({
-    timerStart: 0,
-    timerTime: 0,
-  });
-};
 
-const startTimer = () => {
-  this.setState({
-    timerOn: true,
-    timerTime: this.state.timerTime,
-    timerStart: this.state.timerTime,
-  });
-  this.timer = setInterval(() => {
-    this.setState({
-      timerTime: Date.now() - this.state.timerStart,
-    });
-  }, 10);
-};
-
-const stopTimer = () => {
-  this.setState({ timerOn: false });
-  clearInterval(this.timer);
-};
 
 class App extends React.Component {
   state = {
-    lengthOfRun: 3,
+    lengthOfRun: 120000,
     lengthOfRest: 1,
     totalNumbOfIntvls: 3,
     remainingNumbIntvls: 3,
@@ -64,7 +42,72 @@ class App extends React.Component {
     nextProcess: 'run',
     timerOn: false,
     timerStart: 0,
-    timerTime: 0,
+    timerTime: 120000,
+  };
+
+  adjustTimer = input => {
+    const { timerTime, timerOn } = this.state;
+    const max = 216000000;
+    if (!timerOn) {
+      if (input === 'incHours' && timerTime + 3600000 < max) {
+        this.setState({ timerTime: timerTime + 3600000 });
+      } else if (input === 'decHours' && timerTime - 3600000 >= 0) {
+        this.setState({ timerTime: timerTime - 3600000 });
+      } else if (input === 'incMinutes' && timerTime + 60000 < max) {
+        this.setState({ timerTime: timerTime + 60000 });
+      } else if (input === 'decMinutes' && timerTime - 60000 >= 0) {
+        this.setState({ timerTime: timerTime - 60000 });
+      } else if (input === 'incSeconds' && timerTime + 1000 < max) {
+        this.setState({ timerTime: timerTime + 1000 });
+      } else if (input === 'decSeconds' && timerTime - 1000 >= 0) {
+        this.setState({ timerTime: timerTime - 1000 });
+      }
+    }
+  };
+
+  resetTimer = () => {
+    if (this.state.timerOn === false) {
+      this.setState({
+        timerStart: 0,
+        timerTime: 0,
+      });
+    }
+  };
+
+  startTimer = () => {
+    this.setState({
+      timerOn: true,
+      timerTime: this.state.timerTime,
+      timerStart: this.state.timerTime,
+    });
+    this.timer = setInterval(() => {
+      const newTime = this.state.timerTime - 1000;
+
+      console.log('all the stuff',this.state.timerStart,  
+      this.state.lengthOfRun, this.state.timerTime,
+      this.state.timerStart + this.state.lengthOfRun >= this.state.timerTime);
+
+      if (newTime >= 0) {
+        this.setState({
+          timerTime: newTime,
+        });
+      }
+      else if(this.state.timerStart + this.state.lengthOfRun <= this.state.timerTime) {
+        clearInterval(this.timer);
+        this.setState({ timerOn: false });
+        // eslint-disable-next-line no-alert
+        alert('You are the winner now');
+      }
+
+      this.setState({
+        timerTime: Date.now() - this.state.timerStart,
+      });
+    }, 1000);
+  };
+
+  stopTimer = () => {
+    clearInterval(this.timer);
+    this.setState({ timerOn: false });
   };
 
   render() {
@@ -76,10 +119,7 @@ class App extends React.Component {
       minutes: ('0' + (Math.floor(timerTime / 60000) % 60)).slice(-2),
       hours: ('0' + Math.floor(timerTime / 3600000)).slice(-2),
       rawAppState: {...this.state},
-      // centiseconds: 5,
-      // seconds: 7,
-      // minutes: 7,
-      // hours: 3,
+      remainingTime: (this.state.timerStart + this.state.lengthOfRun) - this.state.timerTime,
     };
 
     return (
@@ -114,6 +154,37 @@ class App extends React.Component {
                 </Text>
               </View>
 
+              <View style={styles.sectionContainer}>
+              {this.state.timerOn === false && this.state.timerTime === 0 && (
+                <Button
+                  onPress={this.startTimer}
+                  title="Start Intervals"
+                  accessibilityLabel="Press the start button to start your interval timer."
+                />
+              )}
+              {this.state.timerOn === true && (
+                <Button
+                  onPress={this.stopTimer}
+                  title="Stop"
+                  accessibilityLabel="Stop the interval timer."
+                />
+              )}
+              {this.state.timerOn === false && this.state.timerTime > 0 && (
+                <Button
+                  onPress={this.startTimer}
+                  title="Resume"
+                  accessibilityLabel="Resume interval training without reseting your current timer."
+                />
+              )}
+              {this.state.timerOn === false && this.state.timerTime > 0 && (
+                <Button
+                  onPress={this.resetTimer}
+                  title="Reset"
+                  accessibilityLabel="Reset the timer to enter new interval times."
+                />
+              )}
+              </View>
+
               {/* Dashboard */}
               <View style={styles.sectionContainer}>
                 <Text style={styles.sectionTitle}>Run Info</Text>
@@ -122,13 +193,56 @@ class App extends React.Component {
                 </Text>
               </View>
 
+              {/* Set Time for Intervals */}
+              <View style={styles.sectionContainer}>
+                <Text style={styles.sectionTitle}>Set Time for Intervals</Text>
+                <Text>Active Time:</Text>
+                  {/* <Button 
+                    onPress={this.adjustTimer('incHours')}
+                    title="&#8679"
+                    accessibilityLabel="Add 1 hour to time."
+                  />
+
+                  <Button 
+                    onPress={this.adjustTimer('incMinutes')}
+                    title="&#8679"
+                    accessibilityLabel="Add 1 hour to time."
+                  />
+
+                  <Button 
+                    onPress={this.adjustTimer('incSeconds')}
+                    title="&#8679"
+                    accessibilityLabel="Add 1 hour to time."
+                  />
+                  
+                  <Button 
+                    onPress={this.adjustTimer('decHours')}
+                    title="&#8679"
+                    accessibilityLabel="Add 1 hour to time."
+                  />
+                  
+                  <Button 
+                    onPress={this.adjustTimer('decMinutes')}
+                    title="&#8679"
+                    accessibilityLabel="Add 1 hour to time."
+                  />
+                  
+                  <Button 
+                    onPress={this.adjustTimer('decSeconds')}
+                    title="&#8679"
+                    accessibilityLabel="Add 1 hour to time."
+                  /> */}
+              </View>
+
+
+              {/* Garbage text input comp */}
               <View style={styles.sectionContainer}>
                 <TextInput
                   style={{
                     height: 80, borderColor: 'gray', borderWidth: 1,
                     backgroundColor: 'gold',
                   }}
-                  defaultValue="You can type in me"
+                  defaultValue="You can type in me... but I don't do anything..."
                   />
               </View>
 
