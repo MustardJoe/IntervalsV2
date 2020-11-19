@@ -24,13 +24,15 @@ import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
 
+import moment from 'moment';
+
 import Header from './components/header/Header.js';
 import CountDownDisplay from './components/countdowntimer/CountDownDisplay.js';
 import Dashboard from './components/dashboard/Dashboard.js';
 
 
 
-class App extends React.Component {
+class App extends Component {
   state = {
     lengthOfRun: 120000,
     lengthOfRest: 1,
@@ -42,7 +44,8 @@ class App extends React.Component {
     nextProcess: 'run',
     timerOn: false,
     timerStart: 0,
-    timerTime: 120000,
+    timerTime: 0,
+    ourMoment: moment().format(),
   };
 
   adjustTimer = input => {
@@ -77,31 +80,47 @@ class App extends React.Component {
   startTimer = () => {
     this.setState({
       timerOn: true,
-      timerTime: this.state.timerTime,
-      timerStart: this.state.timerTime,
+      timerTime: {
+        minutes: moment().minutes(),
+        hour: moment().hour(),
+        seconds: moment().second(),
+      },
+      timerStart: {
+        minutes: moment().minutes(),
+        hour: moment().hour(),
+        seconds: moment().second(),
+      },
     });
+    console.log('top of startTimer, after setting state', this.state.timerTime, this.state.timerStart);
     this.timer = setInterval(() => {
-      const newTime = this.state.timerTime - 1000;
+      // const newTime = { ...this.state.timerTime.format()};
+      // newTime.add(1, 's');
+      // console.log('timerTime in startTimer', this.state.timerTime, 'newTime', newTime);
 
-      console.log('all the stuff',this.state.timerStart,  
-      this.state.lengthOfRun, this.state.timerTime,
-      this.state.timerStart + this.state.lengthOfRun >= this.state.timerTime);
+      // console.log('all the stuff',this.state.timerStart,
+      // this.state.lengthOfRun, this.state.timerTime,
+      // this.state.timerStart + this.state.lengthOfRun >= this.state.timerTime);
 
-      if (newTime >= 0) {
-        this.setState({
-          timerTime: newTime,
-        });
-      }
-      else if(this.state.timerStart + this.state.lengthOfRun <= this.state.timerTime) {
-        clearInterval(this.timer);
-        this.setState({ timerOn: false });
-        // eslint-disable-next-line no-alert
-        alert('You are the winner now');
-      }
+      // if (newTime.subtract(1, 's')  >= moment().format()) {
+      //   this.setState({
+      //     timerTime: newTime,
+      //   });
+      // }
+      // else if (this.state.timerStart + this.state.lengthOfRun <= this.state.timerTime) {
+      //   clearInterval(this.timer);
+      //   this.setState({ timerOn: false });
+      //   // eslint-disable-next-line no-alert
+      //   alert('You are the winner now');
+      // }
 
       this.setState({
-        timerTime: Date.now() - this.state.timerStart,
+        timerTime: {
+          minutes: moment().minutes(),
+          hour: moment().hour(),
+          seconds: moment().second(),
+        },
       });
+      console.log('timerTime, end of startTimer',  this.state.timerTime, 'TIMER START', this.state.timerStart);
     }, 1000);
   };
 
@@ -109,6 +128,10 @@ class App extends React.Component {
     clearInterval(this.timer);
     this.setState({ timerOn: false });
   };
+
+  talk = () => {
+    console.log('hi, i work!');
+  }
 
   render() {
     const { timerTime } = this.state;
@@ -197,37 +220,37 @@ class App extends React.Component {
               <View style={styles.sectionContainer}>
                 <Text style={styles.sectionTitle}>Set Time for Intervals</Text>
                 <Text>Active Time:</Text>
-                  {/* <Button 
+                  {/* <Button
                     onPress={this.adjustTimer('incHours')}
                     title="&#8679"
                     accessibilityLabel="Add 1 hour to time."
                   />
 
-                  <Button 
+                  <Button
                     onPress={this.adjustTimer('incMinutes')}
                     title="&#8679"
                     accessibilityLabel="Add 1 hour to time."
                   />
 
-                  <Button 
+                  <Button
                     onPress={this.adjustTimer('incSeconds')}
                     title="&#8679"
                     accessibilityLabel="Add 1 hour to time."
                   />
-                  
-                  <Button 
+
+                  <Button
                     onPress={this.adjustTimer('decHours')}
                     title="&#8679"
                     accessibilityLabel="Add 1 hour to time."
                   />
-                  
-                  <Button 
+
+                  <Button
                     onPress={this.adjustTimer('decMinutes')}
                     title="&#8679"
                     accessibilityLabel="Add 1 hour to time."
                   />
-                  
-                  <Button 
+
+                  <Button
                     onPress={this.adjustTimer('decSeconds')}
                     title="&#8679"
                     accessibilityLabel="Add 1 hour to time."
