@@ -1,9 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
+/*
  * @format
  * @flow strict-local
  */
@@ -35,11 +32,10 @@ import Dashboard from './components/dashboard/Dashboard.js';
 class App extends Component {
   state = {
     lengthOfRun: 120000,
-    lengthOfRest: 1,
+    lengthOfRest: 60000,
     totalNumbOfIntvls: 3,
     remainingNumbIntvls: 3,
-    countDownTimer: 3.33,
-    currentTime: '3:45:32',
+    countDownTimer: 0,
     currentProcess: 'idle',
     nextProcess: 'run',
     timerOn: false,
