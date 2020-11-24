@@ -1,4 +1,4 @@
-const IntervalSwitcher = (props) => {
+const intervalSwitcher = (props) => {
   const {currentProcess, numberRemaining, lengthOfRun, lengthOfRest} = props;
 
   const nextProcessMap = {
@@ -25,4 +25,4 @@ const IntervalSwitcher = (props) => {
   }
 };
 
-export default IntervalSwitcher;
+export default intervalSwitcher;
