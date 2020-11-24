@@ -89,6 +89,7 @@ class App extends Component {
       //Original stop section, will run interval switcher here 
       if (this.state.timerTime >= this.state.lengthOfRun && this.state.currentProcess === 'run') {
         let intervalUpdate = intervalSwitcher(this.state);
+        console.log('checking return object from Interval Switcher',intervalUpdate.currentProcess);
 
         this.setState({
           currentProcess: intervalUpdate.currentProcess,
