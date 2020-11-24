@@ -21,17 +21,16 @@ import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
 
-import Header from './components/header/Header.js';
 import CountDownDisplay from './components/countdowntimer/CountDownDisplay.js';
 import Dashboard from './components/dashboard/Dashboard.js';
+import Header from './components/header/Header.js';
 
-
+import intervalSwitcher from './services/IntervalSwitcher.js';
 
 class App extends Component {
   state = {
-    lengthOfRun: 30000,
+    lengthOfRun: 5000,
     lengthOfRest: 60000,
-    totalNumbOfIntvls: 3,
     remainingNumbIntvls: 3,
     currentProcess: 'idle',
     nextProcess: 'run',
@@ -74,6 +73,7 @@ class App extends Component {
       timerOn: true,
       timerTime: this.state.timerTime,
       timerStart: this.state.timerTime,
+      currentProcess: 'run',
     });
     console.log('top of startTimer, after setting state', this.state.timerTime, this.state.timerStart);
     this.timer = setInterval(() => {
@@ -87,11 +87,18 @@ class App extends Component {
 
       //This is where we will add in interval tracking stuff once basic countdown timer works
       //Original stop section, will run interval switcher here 
-      else if (this.state.timerTime >= this.state.lengthOfRun) {
-        clearInterval(this.timer);
-        this.setState({ timerOn: false });
-        // eslint-disable-next-line no-alert
-        alert('You are the winner now');
+      if (this.state.timerTime >= this.state.lengthOfRun && this.state.currentProcess === 'run') {
+        let intervalUpdate = intervalSwitcher(this.state);
+
+        this.setState({
+          currentProcess: intervalUpdate.currentProcess,
+          remainingNumbIntvls: intervalUpdate.remainingNumbIntvls,
+
+        })
+        // clearInterval(this.timer);
+        // this.setState({ timerOn: false });
+        // // eslint-disable-next-line no-alert
+        // alert('You are the winner now');
       }
 
       //this will be our final conditional test. lickely the first condition needs re-working
@@ -143,7 +150,6 @@ class App extends Component {
                 <Text style={styles.sectionDescription}>
                   <CountDownDisplay
                     timeToDisplay={this.state}
-                    // rawState={this.state}
                   />
                 </Text>
               </View>
