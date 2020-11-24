@@ -109,14 +109,6 @@ class App extends Component {
         alert('You are the winner now');
       }
 
-      // this.setState({
-      //   timerTime: {
-      //     minutes: moment().minutes(),
-      //     hour: moment().hour(),
-      //     seconds: moment().second(),
-      //   },
-      // });
-
       console.log('timerTime, end of startTimer',  this.state.timerTime, 'TIMER START', this.state.timerStart);
     }, 1000);
   };
@@ -168,7 +160,7 @@ class App extends Component {
                 <Text style={styles.sectionTitle}>Remaning Time:</Text>
                 <Text style={styles.sectionDescription}>
                   <CountDownDisplay
-                    timeToDisplay={appTimerCurrentTime}
+                    timeToDisplay={this.state}
                     // rawState={this.state}
                   />
                 </Text>
