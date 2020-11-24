@@ -2,16 +2,18 @@ import React from 'react';
 import {Text} from 'react-native';
 
 const CountDownDisplay = (props) => {
-  // let countDownTimeInSeconds = () => {
-  //   if (props.timeToDisplay.currentProcess === 'run') {
-  //     return props.timeToDisplay.lengthOfRun - props.timeToDisplay.timerTime;
-  //   } else if (props.timeToDisplay.currentProcess === 'rest') {
-  //     return props.timeToDisplay.lengthOfRest - props.timeToDisplay.timerTime;
-  //   }
-  // };
+  let findCorrectTime = () => {
+    if (
+      props.timeToDisplay.currentProcess === 'run' ||
+      props.timeToDisplay.currentProcess === 'idle'
+    ) {
+      return props.timeToDisplay.lengthOfRun - props.timeToDisplay.timerTime;
+    } else if (props.timeToDisplay.currentProcess === 'rest') {
+      return props.timeToDisplay.lengthOfRest - props.timeToDisplay.timerTime;
+    }
+  };
 
-  let countDownTimeInSeconds =
-    props.timeToDisplay.lengthOfRun - props.timeToDisplay.timerTime;
+  let countDownTimeInSeconds = findCorrectTime();
 
   let appTimerCurrentTime = {
     seconds:
