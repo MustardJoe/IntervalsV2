@@ -174,6 +174,7 @@ class App extends Component {
                 </Text>
               </View>
 
+              {/* Conditionally rendered Timer buttons */}
               <View style={styles.sectionContainer}>
               {this.state.timerOn === false && this.state.timerTime === 0 && (
                 <Button
@@ -209,7 +210,7 @@ class App extends Component {
               <View style={styles.sectionContainer}>
                 <Text style={styles.sectionTitle}>Run Info</Text>
                 <Text style={styles.sectionDescription}>
-                  <Dashboard fakeState={this.state} />
+                  <Dashboard timerStateToDash={this.state} />
                 </Text>
               </View>
 
