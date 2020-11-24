@@ -5,7 +5,7 @@
  * @flow strict-local
  */
 
-import React, { setState, Component } from 'react';
+import React, { Component } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -76,20 +76,18 @@ class App extends Component {
   startTimer = () => {
     this.setState({
       timerOn: true,
-      timerTime: {
-        minutes: moment().minutes(),
-        hour: moment().hour(),
-        seconds: moment().second(),
-      },
-      timerStart: {
-        minutes: moment().minutes(),
-        hour: moment().hour(),
-        seconds: moment().second(),
-      },
+      timerTime: this.state.timerTime,
+      timerStart: this.state.timerTime,
     });
     console.log('top of startTimer, after setting state', this.state.timerTime, this.state.timerStart);
     this.timer = setInterval(() => {
-      // const newTime = { ...this.state.timerTime.format()};
+      const newTime = this.state.timerTime + 1000;
+
+        if (newTime - this.state.timerTime >= 0) {
+          this.setState({
+            timerTime: newTime,
+          });
+        }
       // newTime.add(1, 's');
       // console.log('timerTime in startTimer', this.state.timerTime, 'newTime', newTime);
 
@@ -102,20 +100,23 @@ class App extends Component {
       //     timerTime: newTime,
       //   });
       // }
-      // else if (this.state.timerStart + this.state.lengthOfRun <= this.state.timerTime) {
-      //   clearInterval(this.timer);
-      //   this.setState({ timerOn: false });
-      //   // eslint-disable-next-line no-alert
-      //   alert('You are the winner now');
-      // }
 
-      this.setState({
-        timerTime: {
-          minutes: moment().minutes(),
-          hour: moment().hour(),
-          seconds: moment().second(),
-        },
-      });
+      //This is where we will add in interval tracking stuff once basic countdown timer works
+      else if (this.state.timerTime >= this.state.lengthOfRun) {
+        clearInterval(this.timer);
+        this.setState({ timerOn: false });
+        // eslint-disable-next-line no-alert
+        alert('You are the winner now');
+      }
+
+      // this.setState({
+      //   timerTime: {
+      //     minutes: moment().minutes(),
+      //     hour: moment().hour(),
+      //     seconds: moment().second(),
+      //   },
+      // });
+
       console.log('timerTime, end of startTimer',  this.state.timerTime, 'TIMER START', this.state.timerStart);
     }, 1000);
   };
