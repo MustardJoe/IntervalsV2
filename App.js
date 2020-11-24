@@ -94,8 +94,10 @@ class App extends Component {
         this.setState({
           currentProcess: intervalUpdate.currentProcess,
           remainingNumbIntvls: intervalUpdate.remainingNumbIntvls,
+          timerTime: 0,
+          timerStart: 0,
 
-        })
+        });
         // clearInterval(this.timer);
         // this.setState({ timerOn: false });
         // // eslint-disable-next-line no-alert

@@ -4,6 +4,7 @@ const intervalSwitcher = (props) => {
     remainingNumbIntvls,
     lengthOfRun,
     lengthOfRest,
+    timerTime
   } = props;
   console.log(
     'In intervalSwitcher',
@@ -23,7 +24,7 @@ const intervalSwitcher = (props) => {
       timerOn: false,
     };
   }
-
+  
   if (currentProcess === 'run' && remainingNumbIntvls > 1) {
     console.log('', currentProcess === 'run' && remainingNumbIntvls > 1);
     return {
@@ -31,6 +32,8 @@ const intervalSwitcher = (props) => {
       remainingNumbIntvls: remainingNumbIntvls - 1,
       nextProcessLength: lengthOfRest,
       timerOn: true,
+      timerTime: 0,
+      timerStart: 0,
     };
   }
 };
