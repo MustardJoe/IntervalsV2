@@ -1,24 +1,34 @@
 const intervalSwitcher = (props) => {
-  const {currentProcess, numberRemaining, lengthOfRun, lengthOfRest} = props;
+  const {
+    currentProcess,
+    remainingNumbIntvls,
+    lengthOfRun,
+    lengthOfRest,
+  } = props;
+  console.log(
+    'In intervalSwitcher',
+    currentProcess,
+    remainingNumbIntvls,
+    lengthOfRun,
+    lengthOfRest,
+    'logging props',
+    props,
+  );
 
-  const nextProcessMap = {
-    run: 'rest',
-    rest: 'run',
-  };
-
-  if (currentProcess === 'run' && numberRemaining === 1) {
+  if (currentProcess === 'run' && remainingNumbIntvls === 1) {
     return {
       currentProcess: 'finished',
-      remainingNumbIntvls: numberRemaining - 1,
+      remainingNumbIntvls: remainingNumbIntvls - 1,
       nextProcessLength: lengthOfRun,
       timerOn: false,
     };
   }
 
-  if (currentProcess === 'run' && numberRemaining > 1) {
+  if (currentProcess === 'run' && remainingNumbIntvls > 1) {
+    console.log('', currentProcess === 'run' && remainingNumbIntvls > 1);
     return {
-      currentProcess: nextProcessMap.currentProcess,
-      remainingNumbIntvls: numberRemaining - 1,
+      currentProcess: 'rest',
+      remainingNumbIntvls: remainingNumbIntvls - 1,
       nextProcessLength: lengthOfRest,
       timerOn: true,
     };
