@@ -21,8 +21,6 @@ import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
 
-import moment from 'moment';
-
 import Header from './components/header/Header.js';
 import CountDownDisplay from './components/countdowntimer/CountDownDisplay.js';
 import Dashboard from './components/dashboard/Dashboard.js';
@@ -31,17 +29,15 @@ import Dashboard from './components/dashboard/Dashboard.js';
 
 class App extends Component {
   state = {
-    lengthOfRun: 120000,
+    lengthOfRun: 30000,
     lengthOfRest: 60000,
     totalNumbOfIntvls: 3,
     remainingNumbIntvls: 3,
-    countDownTimer: 0,
     currentProcess: 'idle',
     nextProcess: 'run',
     timerOn: false,
     timerStart: 0,
     timerTime: 0,
-    ourMoment: moment().format(),
   };
 
   adjustTimer = input => {
@@ -83,26 +79,23 @@ class App extends Component {
     this.timer = setInterval(() => {
       const newTime = this.state.timerTime + 1000;
 
-        if (newTime - this.state.timerTime >= 0) {
-          this.setState({
-            timerTime: newTime,
-          });
-        }
-      // newTime.add(1, 's');
-      // console.log('timerTime in startTimer', this.state.timerTime, 'newTime', newTime);
-
-      // console.log('all the stuff',this.state.timerStart,
-      // this.state.lengthOfRun, this.state.timerTime,
-      // this.state.timerStart + this.state.lengthOfRun >= this.state.timerTime);
-
-      // if (newTime.subtract(1, 's')  >= moment().format()) {
-      //   this.setState({
-      //     timerTime: newTime,
-      //   });
-      // }
+      if (newTime - this.state.timerTime >= 0) {
+        this.setState({
+          timerTime: newTime,
+        });
+      }
 
       //This is where we will add in interval tracking stuff once basic countdown timer works
+      //Original stop section, will run interval switcher here 
       else if (this.state.timerTime >= this.state.lengthOfRun) {
+        clearInterval(this.timer);
+        this.setState({ timerOn: false });
+        // eslint-disable-next-line no-alert
+        alert('You are the winner now');
+      }
+
+      //this will be our final conditional test. lickely the first condition needs re-working
+      else if (this.state.timerTime >= this.state.lengthOfRun && this.state.remainingNumbIntvls === 1 && this.state.currentProcess === 'run') {
         clearInterval(this.timer);
         this.setState({ timerOn: false });
         // eslint-disable-next-line no-alert
@@ -123,17 +116,6 @@ class App extends Component {
   }
 
   render() {
-    const { timerTime } = this.state;
-
-    let appTimerCurrentTime = {
-      centiseconds: ('0' + (Math.floor(timerTime / 10) % 100)).slice(-2),
-      seconds: ('0' + (Math.floor(timerTime / 1000) % 60)).slice(-2),
-      minutes: ('0' + (Math.floor(timerTime / 60000) % 60)).slice(-2),
-      hours: ('0' + Math.floor(timerTime / 3600000)).slice(-2),
-      rawAppState: {...this.state},
-      remainingTime: (this.state.timerStart + this.state.lengthOfRun) - this.state.timerTime,
-    };
-
     return (
         <>
           <StatusBar barStyle="dark-content" />
@@ -200,7 +182,7 @@ class App extends Component {
 
               {/* Dashboard */}
               <View style={styles.sectionContainer}>
-                <Text style={styles.sectionTitle}>Run Info</Text>
+                <Text style={styles.sectionTitle}>Interval Details</Text>
                 <Text style={styles.sectionDescription}>
                   <Dashboard timerStateToDash={this.state} />
                 </Text>

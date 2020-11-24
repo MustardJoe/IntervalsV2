@@ -19,8 +19,8 @@ const CountDownDisplay = (props) => {
     <>
       <Text>
         {appTimerCurrentTime.hours} : {appTimerCurrentTime.minutes} :{' '}
-        {appTimerCurrentTime.seconds} on your{' '}
-        {props.timeToDisplay.currentProcess} stage
+        {appTimerCurrentTime.seconds} on {props.timeToDisplay.currentProcess}{' '}
+        stage
       </Text>
     </>
   );
