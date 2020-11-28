@@ -86,8 +86,8 @@ class App extends Component {
       }
 
       //This is where we will add in interval tracking stuff once basic countdown timer works
-      //Original stop section, will run interval switcher here 
-      if (this.state.timerTime >= this.state.lengthOfRun && this.state.currentProcess === 'run') {
+      //Original stop section, will run interval switcher here
+      if (this.state.timerTime >= this.state.lengthOfRun && this.state.currentProcess === 'run' && this.state.remainingNumbIntvls > 1) {
         let intervalUpdate = intervalSwitcher(this.state);
         console.log('checking return object from Interval Switcher',intervalUpdate.currentProcess);
 
@@ -113,9 +113,18 @@ class App extends Component {
 
 
       //this will be our final conditional test. lickely the first condition needs re-working
-      else if (this.state.timerTime >= this.state.lengthOfRun && this.state.remainingNumbIntvls === 1 && this.state.currentProcess === 'run') {
-        clearInterval(this.timer);
-        this.setState({ timerOn: false });
+      else if (this.state.timerTime >= this.state.lengthOfRun
+        && this.state.remainingNumbIntvls === 1 && this.state.currentProcess === 'run') {
+          let intervalUpdate = intervalSwitcher(this.state);
+          clearInterval(this.timer);
+          this.setState({
+            timerOn: false,
+            currentProcess: intervalUpdate.currentProcess,
+            remainingNumbIntvls: intervalUpdate.remainingNumbIntvls,
+            timerTime: 0,
+            timerStart: 0,
+
+        });
         // eslint-disable-next-line no-alert
         alert('You are the winner now');
       }
