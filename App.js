@@ -30,7 +30,7 @@ import intervalSwitcher from './services/IntervalSwitcher.js';
 class App extends Component {
   state = {
     lengthOfRun: 5000,
-    lengthOfRest: 60000,
+    lengthOfRest: 6000,
     remainingNumbIntvls: 3,
     currentProcess: 'idle',
     nextProcess: 'run',
@@ -75,7 +75,7 @@ class App extends Component {
       timerStart: this.state.timerTime,
       currentProcess: 'run',
     });
-    console.log('top of startTimer, after setting state', this.state.timerTime, this.state.timerStart);
+    console.log('top of startTimer, after setting state', this.state.timerTime, this.state.timerStart, this.state.currentProcess);
     this.timer = setInterval(() => {
       const newTime = this.state.timerTime + 1000;
 
@@ -96,13 +96,21 @@ class App extends Component {
           remainingNumbIntvls: intervalUpdate.remainingNumbIntvls,
           timerTime: 0,
           timerStart: 0,
-
         });
-        // clearInterval(this.timer);
-        // this.setState({ timerOn: false });
-        // // eslint-disable-next-line no-alert
-        // alert('You are the winner now');
       }
+
+      if (this.state.timerTime >= this.state.lengthOfRest && this.state.currentProcess === 'rest') {
+        let intervalUpdate = intervalSwitcher(this.state);
+        console.log('checking return object from Interval Switcher, IN REST SWITCHING LOGIC',intervalUpdate.currentProcess);
+
+        this.setState({
+          currentProcess: intervalUpdate.currentProcess,
+          remainingNumbIntvls: intervalUpdate.remainingNumbIntvls,
+          timerTime: 0,
+          timerStart: 0,
+        });
+      }
+
 
       //this will be our final conditional test. lickely the first condition needs re-working
       else if (this.state.timerTime >= this.state.lengthOfRun && this.state.remainingNumbIntvls === 1 && this.state.currentProcess === 'run') {
@@ -112,7 +120,7 @@ class App extends Component {
         alert('You are the winner now');
       }
 
-      console.log('timerTime, end of startTimer',  this.state.timerTime, 'TIMER START', this.state.timerStart);
+      console.log('timerTime, end of set interval',  this.state.timerTime, 'TIMER START', this.state.timerStart, 'current process', this.state.currentProcess);
     }, 1000);
   };
 
