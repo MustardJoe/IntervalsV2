@@ -25,13 +25,19 @@ const CountDownDisplay = (props) => {
 
   return (
     <>
-      <Text>
+      <Text style={counterStyle}>
         {appTimerCurrentTime.hours} : {appTimerCurrentTime.minutes} :{' '}
         {appTimerCurrentTime.seconds} on {props.timeToDisplay.currentProcess}{' '}
         stage
       </Text>
     </>
   );
+};
+
+let counterStyle = {
+  fontSize: 28,
+  paddingTop: 2,
+  paddingBottom: 5,
 };
 
 export default CountDownDisplay;

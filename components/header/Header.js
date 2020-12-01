@@ -20,7 +20,7 @@ const Header = () => {
 let headStyle = {
   fontSize: 32,
   paddingTop: 2,
-  paddingBottom: 10,
+  paddingBottom: 5,
 };
 
 let title = {
@@ -29,7 +29,7 @@ let title = {
 
 let name = {
   fontSize: 20,
-  paddingBottom: 10,
+  paddingBottom: 8,
   paddingTop: 10,
 };
 
