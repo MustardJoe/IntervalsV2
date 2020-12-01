@@ -41,9 +41,10 @@ class App extends Component {
     timerTime: 0,
   };
 
-  /////////////////////// INTERVAL SET BUTTON FUNC /////////////////////////////////////////
+  /////////////////////// INTERVAL SET BUTTON FUNCTIONS /////////////////////////////////////////
 
   timerSetButtonsFunc = {
+    maxTime: 7200000,
     incMinutesRun: () => {
       const { timerTime, timerOn, lengthOfRest, lengthOfRun } = this.state;
       if (!timerOn) {
@@ -68,37 +69,32 @@ class App extends Component {
         return this.setState({ lengthOfRest: lengthOfRest - 60000 });
       }
     },
-  }
-
-  buttonClickListener = (stuff) =>{
-    const { timerTime, timerOn } = this.state;
-    alert('Clicked On Button !!!', stuff);
-    return this.setState({ timerTime: timerTime - 60000 });
-    }
-
-  //the buttons can't pass in any parameters, so functions must be pure... REWRITE this so it's pure func
-  adjustTimer = input => {
-    const { timerTime, timerOn } = this.state;
-    const max = 7200000;
-    if (!timerOn) {
-      if (input === 'incHours' && timerTime + 3600000 < max) {
-        this.setState({ timerTime: timerTime + 3600000 });
-      } else if (input === 'decHours' && timerTime - 3600000 >= 0) {
-        this.setState({ timerTime: timerTime - 3600000 });
-      } else if (input === 'incMinutes' && timerTime + 60000 < max) {
-        this.setState({ timerTime: timerTime + 60000 });
-      } else if (input === 'decMinutes' && timerTime - 60000 >= 0) {
-        this.setState({ timerTime: timerTime - 60000 });
-      } else if (input === 'incSeconds' && timerTime + 1000 < max) {
-        this.setState({ timerTime: timerTime + 1000 });
-      } else if (input === 'decSeconds' && timerTime - 1000 >= 0) {
-        this.setState({ timerTime: timerTime - 1000 });
+    incSecondsRun: () => {
+      const { timerTime, timerOn, lengthOfRest, lengthOfRun } = this.state;
+      if (!timerOn) {
+        return this.setState({ lengthOfRun: lengthOfRun + 1000 });
       }
-    }
-  };
-
-
-///////////////////////////////////////////BOTTOM OF BUTTON FUNC. ////////////////////////////
+    },
+    decSecondsRun: () => {
+      const { timerTime, timerOn, lengthOfRest, lengthOfRun } = this.state;
+      if (!timerOn) {
+        return this.setState({ lengthOfRun: lengthOfRun - 1000 });
+      }
+    },
+    incSecondsRest: () => {
+      const { timerTime, timerOn, lengthOfRest, lengthOfRun } = this.state;
+      if (!timerOn) {
+        return this.setState({ lengthOfRest: lengthOfRest + 1000 });
+      }
+    },
+    decSecondsRest: () => {
+      const { timerTime, timerOn, lengthOfRest, lengthOfRun } = this.state;
+      if (!timerOn) {
+        return this.setState({ lengthOfRest: lengthOfRest - 1000 });
+      }
+    },
+  }
+///////////////////////////////////////////BOTTOM OF TIME SET FUNCTIONS. ////////////////////////////
 
   resetTimer = () => {
     if (this.state.timerOn === false) {
@@ -177,10 +173,6 @@ class App extends Component {
     clearInterval(this.timer);
     this.setState({ timerOn: false });
   };
-
-  talk = () => {
-    console.log('hi, i work!');
-  }
 
   render() {
     return (
