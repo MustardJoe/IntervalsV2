@@ -22,6 +22,7 @@ import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
 
+import ControlPanel from './components/controlpanel/ControlPanel.js';
 import CountDownDisplay from './components/countdowntimer/CountDownDisplay.js';
 import Dashboard from './components/dashboard/Dashboard.js';
 import Header from './components/header/Header.js';
@@ -94,8 +95,9 @@ class App extends Component {
       }
     },
   }
-///////////////////////////////////////////BOTTOM OF TIME SET FUNCTIONS. ////////////////////////////
+/////////////////////////BOTTOM OF INTERVAL SETTING FUNCTIONS. ////////////////////////////
 
+//////////////////////////////// TIMER FUNCTIONS //////////////////////////////////////
   resetTimer = () => {
     if (this.state.timerOn === false) {
       this.setState({
@@ -159,12 +161,10 @@ class App extends Component {
             remainingNumbIntvls: intervalUpdate.remainingNumbIntvls,
             timerTime: 0,
             timerStart: 0,
-
         });
         // eslint-disable-next-line no-alert
         alert('You are the winner now');
       }
-
       console.log('timerTime, end of set interval',  this.state.timerTime, 'TIMER START', this.state.timerStart, 'current process', this.state.currentProcess);
     }, 1000);
   };
@@ -246,72 +246,19 @@ class App extends Component {
                 </Text>
               </View>
 
-              {/* Set Time for Intervals */}
+              {/* Control Panel - Set Time for Intervals */}
               <View style={styles.sectionContainer}>
-                <Text style={styles.sectionTitle}>Set Time for Intervals</Text>
-                <Text>Active Time:</Text>
-
-                <Button
-                  onPress={this.timerSetButtonsFunc.incMinutesRun}
-                  title="+ Min Run"
-                  color="#00B0FF"
+                <ControlPanel
+                  incMinutesRun={this.timerSetButtonsFunc.incMinutesRun}
+                  decMinutesRun={this.timerSetButtonsFunc.decMinutesRun}
+                  incSecondsRun={this.timerSetButtonsFunc.incSecondsRun}
+                  decSecondsRun={this.timerSetButtonsFunc.decSecondsRun}
+                  incMinutesRest={this.timerSetButtonsFunc.incMinutesRest}
+                  decMinutesRest={this.timerSetButtonsFunc.decMinutesRest}
+                  incSecondsRest={this.timerSetButtonsFunc.incSecondsRest}
+                  decSecondsRest={this.timerSetButtonsFunc.decSecondsRest}
                 />
-                <Button
-                  onPress={this.timerSetButtonsFunc.decMinutesRun}
-                  title="- Min Run"
-                  color="#00B0FF"
-                />
-
-                <Button
-                  onPress={this.timerSetButtonsFunc.incMinutesRest}
-                  title="+ Min Rest"
-                  color="#00B0FF"
-                />
-                <Button
-                  onPress={this.timerSetButtonsFunc.decMinutesRest}
-                  title="- Min Rest"
-                  color="#00B0FF"
-                />
-                  {/* <Button
-                    onPress={
-                      console.log('button...')
-                      // this.adjustTimer('incMinutes')
-                    }
-                    title="up"
-                    accessibilityLabel="Add 1 hour to time."
-                  /> */}
-
-                  {/* <Button
-                    onPress={this.adjustTimer('incMinutes')}
-                    title="&#8679"
-                    accessibilityLabel="Add 1 hour to time."
-                  /> */}
-
-                  {/* <Button
-                    onPress={this.adjustTimer('incSeconds')}
-                    title="&#8679"
-                    accessibilityLabel="Add 1 hour to time."
-                  />
-
-                  <Button
-                    onPress={this.adjustTimer('decHours')}
-                    title="&#8679"
-                    accessibilityLabel="Add 1 hour to time."
-                  />
-
-                  <Button
-                    onPress={this.adjustTimer('decMinutes')}
-                    title="&#8679"
-                    accessibilityLabel="Add 1 hour to time."
-                  />
-
-                  <Button
-                    onPress={this.adjustTimer('decSeconds')}
-                    title="&#8679"
-                    accessibilityLabel="Add 1 hour to time."
-                  /> */}
               </View>
-
 
               {/* Garbage text input comp */}
               <View style={styles.sectionContainer}>
