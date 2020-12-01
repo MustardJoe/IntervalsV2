@@ -44,7 +44,7 @@ const Dashboard = (props) => {
 
   return (
     <View>
-      <Text>Right now you are: {props.timerStateToDash.currentProcess}</Text>
+      <Text>Right now you should: {props.timerStateToDash.currentProcess}</Text>
       <Text>
         Run Lenght: {formatRunLength.minutes} : {formatRunLength.seconds}{' '}
         minutes

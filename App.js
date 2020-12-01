@@ -17,6 +17,8 @@ import {
   Button,
 } from 'react-native';
 
+import PlaySound from './services/playSoundFunc.js';
+
 import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
@@ -39,9 +41,45 @@ class App extends Component {
     timerTime: 0,
   };
 
+  /////////////////////// BUTTON FUNC /////////////////////////////////////////
+
+  timerSetButtonsFunc = {
+    incMinutesRun: () => {
+      const { timerTime, timerOn, lengthOfRest, lengthOfRun } = this.state;
+      if (!timerOn) {
+        return this.setState({ lengthOfRun: lengthOfRun + 60000 });
+      }
+    },
+    decMinutesRun: () => {
+      const { timerTime, timerOn, lengthOfRest, lengthOfRun } = this.state;
+      if (!timerOn) {
+        return this.setState({ lengthOfRun: lengthOfRun - 60000 });
+      }
+    },
+    incMinutesRest: () => {
+      const { timerTime, timerOn, lengthOfRest, lengthOfRun } = this.state;
+      if (!timerOn) {
+        return this.setState({ lengthOfRest: lengthOfRest + 60000 });
+      }
+    },
+    decMinutesRest: () => {
+      const { timerTime, timerOn, lengthOfRest, lengthOfRun } = this.state;
+      if (!timerOn) {
+        return this.setState({ lengthOfRest: lengthOfRest - 60000 });
+      }
+    },
+  }
+
+  buttonClickListener = (stuff) =>{
+    const { timerTime, timerOn } = this.state;
+    alert('Clicked On Button !!!', stuff);
+    return this.setState({ timerTime: timerTime - 60000 });
+    }
+
+  //the buttons can't pass in any parameters, so functions must be pure... REWRITE this so it's pure func
   adjustTimer = input => {
     const { timerTime, timerOn } = this.state;
-    const max = 216000000;
+    const max = 7200000;
     if (!timerOn) {
       if (input === 'incHours' && timerTime + 3600000 < max) {
         this.setState({ timerTime: timerTime + 3600000 });
@@ -58,6 +96,9 @@ class App extends Component {
       }
     }
   };
+
+
+///////////////////////////////////////////BOTTOM OF BUTTON FUNC. ////////////////////////////
 
   resetTimer = () => {
     if (this.state.timerOn === false) {
@@ -85,12 +126,11 @@ class App extends Component {
         });
       }
 
-      //This is where we will add in interval tracking stuff once basic countdown timer works
-      //Original stop section, will run interval switcher here
+      //Interval Switching Logic - going from run to rest
       if (this.state.timerTime >= this.state.lengthOfRun && this.state.currentProcess === 'run' && this.state.remainingNumbIntvls > 1) {
         let intervalUpdate = intervalSwitcher(this.state);
         console.log('checking return object from Interval Switcher',intervalUpdate.currentProcess);
-
+        // PlaySound.play(); not how to play a sound
         this.setState({
           currentProcess: intervalUpdate.currentProcess,
           remainingNumbIntvls: intervalUpdate.remainingNumbIntvls,
@@ -99,10 +139,11 @@ class App extends Component {
         });
       }
 
+      //Interval Switching Logic - going from rest to run
       if (this.state.timerTime >= this.state.lengthOfRest && this.state.currentProcess === 'rest') {
         let intervalUpdate = intervalSwitcher(this.state);
         console.log('checking return object from Interval Switcher, IN REST SWITCHING LOGIC',intervalUpdate.currentProcess);
-
+        // PlaySound.play();  not how to play a sound
         this.setState({
           currentProcess: intervalUpdate.currentProcess,
           remainingNumbIntvls: intervalUpdate.remainingNumbIntvls,
@@ -111,8 +152,7 @@ class App extends Component {
         });
       }
 
-
-      //this will be our final conditional test. lickely the first condition needs re-working
+      //Final conditional test: are we all the way done with everything?
       else if (this.state.timerTime >= this.state.lengthOfRun
         && this.state.remainingNumbIntvls === 1 && this.state.currentProcess === 'run') {
           let intervalUpdate = intervalSwitcher(this.state);
@@ -218,19 +258,44 @@ class App extends Component {
               <View style={styles.sectionContainer}>
                 <Text style={styles.sectionTitle}>Set Time for Intervals</Text>
                 <Text>Active Time:</Text>
-                  {/* <Button
-                    onPress={this.adjustTimer('incHours')}
-                    title="&#8679"
-                    accessibilityLabel="Add 1 hour to time."
-                  />
 
-                  <Button
+                <Button
+                  onPress={this.timerSetButtonsFunc.incMinutesRun}
+                  title="+ Min Run"
+                  color="#00B0FF"
+                />
+                <Button
+                  onPress={this.timerSetButtonsFunc.decMinutesRun}
+                  title="- Min Run"
+                  color="#00B0FF"
+                />
+
+                <Button
+                  onPress={this.timerSetButtonsFunc.incMinutesRest}
+                  title="+ Min Rest"
+                  color="#00B0FF"
+                />
+                <Button
+                  onPress={this.timerSetButtonsFunc.decMinutesRest}
+                  title="- Min Rest"
+                  color="#00B0FF"
+                />
+                  {/* <Button
+                    onPress={
+                      console.log('button...')
+                      // this.adjustTimer('incMinutes')
+                    }
+                    title="up"
+                    accessibilityLabel="Add 1 hour to time."
+                  /> */}
+
+                  {/* <Button
                     onPress={this.adjustTimer('incMinutes')}
                     title="&#8679"
                     accessibilityLabel="Add 1 hour to time."
-                  />
+                  /> */}
 
-                  <Button
+                  {/* <Button
                     onPress={this.adjustTimer('incSeconds')}
                     title="&#8679"
                     accessibilityLabel="Add 1 hour to time."
