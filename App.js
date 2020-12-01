@@ -6,6 +6,7 @@
  */
 
 import React, { Component } from 'react';
+
 import {
   SafeAreaView,
   StyleSheet,
@@ -17,8 +18,6 @@ import {
   Button,
 } from 'react-native';
 
-import PlaySound from './services/playSoundFunc.js';
-
 import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
@@ -28,6 +27,7 @@ import Dashboard from './components/dashboard/Dashboard.js';
 import Header from './components/header/Header.js';
 
 import intervalSwitcher from './services/IntervalSwitcher.js';
+import PlaySound from './services/playSoundFunc.js';
 
 class App extends Component {
   state = {
@@ -41,7 +41,7 @@ class App extends Component {
     timerTime: 0,
   };
 
-  /////////////////////// BUTTON FUNC /////////////////////////////////////////
+  /////////////////////// INTERVAL SET BUTTON FUNC /////////////////////////////////////////
 
   timerSetButtonsFunc = {
     incMinutesRun: () => {
