@@ -47,49 +47,49 @@ class App extends Component {
   timerSetButtonsFunc = {
     maxTime: 7200000,
     incMinutesRun: () => {
-      const { timerTime, timerOn, lengthOfRest, lengthOfRun } = this.state;
+      const { timerOn, lengthOfRun } = this.state;
       if (!timerOn) {
         return this.setState({ lengthOfRun: lengthOfRun + 60000 });
       }
     },
     decMinutesRun: () => {
-      const { timerTime, timerOn, lengthOfRest, lengthOfRun } = this.state;
+      const { timerOn, lengthOfRun } = this.state;
       if (!timerOn) {
         return this.setState({ lengthOfRun: lengthOfRun - 60000 });
       }
     },
     incMinutesRest: () => {
-      const { timerTime, timerOn, lengthOfRest, lengthOfRun } = this.state;
+      const { timerOn, lengthOfRest } = this.state;
       if (!timerOn) {
         return this.setState({ lengthOfRest: lengthOfRest + 60000 });
       }
     },
     decMinutesRest: () => {
-      const { timerTime, timerOn, lengthOfRest, lengthOfRun } = this.state;
+      const { timerOn, lengthOfRest } = this.state;
       if (!timerOn) {
         return this.setState({ lengthOfRest: lengthOfRest - 60000 });
       }
     },
     incSecondsRun: () => {
-      const { timerTime, timerOn, lengthOfRest, lengthOfRun } = this.state;
+      const { timerOn, lengthOfRun } = this.state;
       if (!timerOn) {
         return this.setState({ lengthOfRun: lengthOfRun + 1000 });
       }
     },
     decSecondsRun: () => {
-      const { timerTime, timerOn, lengthOfRest, lengthOfRun } = this.state;
+      const { timerOn, lengthOfRun } = this.state;
       if (!timerOn) {
         return this.setState({ lengthOfRun: lengthOfRun - 1000 });
       }
     },
     incSecondsRest: () => {
-      const { timerTime, timerOn, lengthOfRest, lengthOfRun } = this.state;
+      const { timerOn, lengthOfRest } = this.state;
       if (!timerOn) {
         return this.setState({ lengthOfRest: lengthOfRest + 1000 });
       }
     },
     decSecondsRest: () => {
-      const { timerTime, timerOn, lengthOfRest, lengthOfRun } = this.state;
+      const { timerOn, lengthOfRest } = this.state;
       if (!timerOn) {
         return this.setState({ lengthOfRest: lengthOfRest - 1000 });
       }
