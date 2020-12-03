@@ -42,8 +42,7 @@ class App extends Component {
     timerTime: 0,
   };
 
-  /////////////////////// INTERVAL SET BUTTON FUNCTIONS /////////////////////////////////////////
-
+  /////////////////////// INTERVAL SETTING FUNCTIONS ///////////////////////
   timerSetButtonsFunc = {
     maxTime: 7200000,
     incMinutesRun: () => {
@@ -95,7 +94,6 @@ class App extends Component {
       }
     },
   }
-/////////////////////////BOTTOM OF INTERVAL SETTING FUNCTIONS. ////////////////////////////
 
 //////////////////////////////// TIMER FUNCTIONS //////////////////////////////////////
   resetTimer = () => {
@@ -259,18 +257,6 @@ class App extends Component {
                   decSecondsRest={this.timerSetButtonsFunc.decSecondsRest}
                 />
               </View>
-
-              {/* Garbage text input comp */}
-              <View style={styles.sectionContainer}>
-                <TextInput
-                  style={{
-                    height: 80, borderColor: 'gray', borderWidth: 1,
-                    backgroundColor: 'gold',
-                  }}
-                  defaultValue="You can type in me... but I don't do anything..."
-                  />
-              </View>
-
             </View>
           </ScrollView>
         </SafeAreaView>
@@ -292,7 +278,7 @@ const styles = StyleSheet.create({
     minHeight: 700,
   },
   sectionContainer: {
-    marginTop: 32,
+    marginTop: 16,
     paddingHorizontal: 24,
   },
   sectionTitle: {

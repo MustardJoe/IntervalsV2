@@ -29,8 +29,8 @@ let title = {
 
 let name = {
   fontSize: 20,
-  paddingBottom: 8,
-  paddingTop: 10,
+  paddingBottom: 2,
+  paddingTop: 2,
 };
 
 export default Header;
