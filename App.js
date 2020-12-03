@@ -93,6 +93,16 @@ class App extends Component {
         return this.setState({ lengthOfRest: lengthOfRest - 1000 });
       }
     },
+    decIntervals: () => {
+      console.log('decIntervals is running');
+      this.setState({ remainingNumbIntvls: this.state.remainingNumbIntvls - 1 });
+      console.log(this.state.remainingNumbIntvls);
+    },
+    incIntervals: () => {
+      console.log('incIntervals is running');
+      this.setState({ remainingNumbIntvls: this.state.remainingNumbIntvls + 1 });
+      console.log(this.state.remainingNumbIntvls);
+    },
   }
 
 //////////////////////////////// TIMER FUNCTIONS //////////////////////////////////////
@@ -255,6 +265,8 @@ class App extends Component {
                   decMinutesRest={this.timerSetButtonsFunc.decMinutesRest}
                   incSecondsRest={this.timerSetButtonsFunc.incSecondsRest}
                   decSecondsRest={this.timerSetButtonsFunc.decSecondsRest}
+                  decIntervals={this.timerSetButtonsFunc.decIntervals}
+                  incIntervals={this.timerSetButtonsFunc.incIntervals}
                 />
               </View>
             </View>

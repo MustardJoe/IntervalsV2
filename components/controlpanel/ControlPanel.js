@@ -2,38 +2,6 @@ import React, {Component} from 'react';
 import {View, Text, Button, StyleSheet} from 'react-native';
 
 class ControlPanel extends Component {
-  incMinutesRun = () => {
-    this.props.incMinutesRun();
-  };
-
-  decMinutesRun = () => {
-    this.props.decMinutesRun();
-  };
-
-  incSecondsRun = () => {
-    this.props.incSecondsRun();
-  };
-
-  decSecondsRun = () => {
-    this.props.decSecondsRun();
-  };
-
-  incMinutesRest = () => {
-    this.props.incMinutesRest();
-  };
-
-  decMinutesRest = () => {
-    this.props.decMinutesRest();
-  };
-
-  incSecondsRest = () => {
-    this.props.incSecondsRest();
-  };
-
-  decSecondsRest = () => {
-    this.props.decSecondsRest();
-  };
-
   render() {
     return (
       <View style={styles.controlPanel}>
@@ -42,7 +10,7 @@ class ControlPanel extends Component {
         <View style={styles.buttonContainer}>
           <Button
             style={styles.controlPanelButtons}
-            onPress={this.incMinutesRun}
+            onPress={this.props.incMinutesRun}
             title="+ Min Run"
             color="#00B0FF"
             accessibilityLabel="Add 1 minute to active time."
@@ -57,7 +25,7 @@ class ControlPanel extends Component {
 
           <Button
             style={styles.controlPanelButtons}
-            onPress={this.incSecondsRun}
+            onPress={this.props.incSecondsRun}
             title="+ Sec Run"
             color="#00B0FF"
             accessibilityLabel="Add 1 second to active time."
@@ -97,6 +65,23 @@ class ControlPanel extends Component {
             title="- Sec Rest"
             color="#00B0FF"
             accessibilityLabel="Subtract 1 second from rest time."
+          />
+        </View>
+        <View>
+          <Text>Change Number of Intervals:</Text>
+        </View>
+        <View style={styles.buttonContainer}>
+          <Button
+            onPress={this.props.decIntervals}
+            title="↓"
+            color="#00B0FF"
+            accessibilityLabel="Subtract 1 interval."
+          />
+          <Button
+            onPress={this.props.incIntervals}
+            title="↑"
+            color="#00B0FF"
+            accessibilityLabel="Add 1 interval."
           />
         </View>
       </View>
