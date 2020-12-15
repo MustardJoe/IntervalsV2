@@ -2,7 +2,7 @@
 
 Thanks for checking out Exercise Intervals by Rachel and Jon (aka Crypto_Terror_Encryption)
 
-We created this app together to fill what we thought was a a niche use-case: an exercise specific timer that could track your overall workout time as comprised of a series of excursive periods followed with rest. This project actually grew out of our initial search for such an app that we could use ourselves. While plenty of excursive apps already exist, there were none that provided what we were looking for: stripped down but flawless functionality of one task.
+We created this app together to fill what we thought was a a niche use-case: an exercise specific timer that could track your overall workout time as comprised of a series of exercise periods followed with rest. This project actually grew out of our initial search for such an app that we could use ourselves - we weren't looking for a new project, the product we wanted just didn't exist. While plenty of excursive apps already exist, there were none that provided what we were looking for: stripped down but flawless functionality of one task.
 
 No data mining, no calorie tracking, no yelling at you when you miss a day, no endless stream of advertising.
 
