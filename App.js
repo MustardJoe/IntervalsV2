@@ -171,7 +171,7 @@ class App extends Component {
             timerStart: 0,
         });
         // eslint-disable-next-line no-alert
-        alert('You are the winner now');
+        alert('You have finished your workout, Great Jorb!');
       }
       console.log('timerTime, end of set interval',  this.state.timerTime, 'TIMER START', this.state.timerStart, 'current process', this.state.currentProcess);
     }, 1000);
